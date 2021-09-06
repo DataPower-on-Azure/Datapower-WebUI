@@ -1,0 +1,31 @@
+apiVersion: datapower.ibm.com/v1beta3
+kind: DataPowerService
+metadata:
+  name: webgui-deployment
+  namespace: datapower
+spec:
+  license:
+    accept: true
+    license: L-RJON-C2XKPU
+    use: nonproduction
+  resources:
+    limits:
+      memory: 4Gi
+    requests:
+      cpu: 1
+      memory: 4Gi
+  users:
+    - name: admin
+      accessLevel: privileged
+      passwordSecret: datapower-user # Secret to load the password for admin user
+  domains:
+    - name: default
+      certs:
+        - certType: sharedcerts # Load into SharedCerts
+          secret: datapower-cert-piers # OCP Secret to load certs from
+      dpApp:
+        config:
+          - domain-config-fixed-cert # ConfigMap where datapower configuration is stored
+      passphraseSecret: default-passphrase # Secret which contains passphrase for Key (if needed)
+  version: 10.0-cd
+  replicas: 1

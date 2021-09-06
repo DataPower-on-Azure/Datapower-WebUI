@@ -1,0 +1,39 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: webgui-test
+  namespace: datapower
+spec:
+  to:
+    kind: Service
+    name: datapower-webgui-2
+    weight: 100
+  port:
+    targetPort: http-url
+  tls:
+    termination: reencrypt
+    destinationCACertificate: |-
+      -----BEGIN CERTIFICATE-----
+      MIIDpDCCAowCCQDk39YTB2MDAzANBgkqhkiG9w0BAQsFADCBkzELMAkGA1UEBhMC
+      R0IxEjAQBgNVBAgMCUhhbXBzaGlyZTETMBEGA1UEBwwKUG9ydHNtb3V0aDEMMAoG
+      A1UECgwDSUJNMRQwEgYDVQQLDAtUZWNoIEdhcmFnZTESMBAGA1UEAwwJbG9jYWxo
+      b3N0MSMwIQYJKoZIhvcNAQkBFhRwaWVycy53YWx0ZXJAaWJtLmNvbTAeFw0yMTA5
+      MDMxNDQwNTBaFw0yNjA5MDIxNDQwNTBaMIGTMQswCQYDVQQGEwJHQjESMBAGA1UE
+      CAwJSGFtcHNoaXJlMRMwEQYDVQQHDApQb3J0c21vdXRoMQwwCgYDVQQKDANJQk0x
+      FDASBgNVBAsMC1RlY2ggR2FyYWdlMRIwEAYDVQQDDAlsb2NhbGhvc3QxIzAhBgkq
+      hkiG9w0BCQEWFHBpZXJzLndhbHRlckBpYm0uY29tMIIBIjANBgkqhkiG9w0BAQEF
+      AAOCAQ8AMIIBCgKCAQEA4hIwqOezUaoD3+Diuly4Nz7YkrX+4vJbStpsmUuRrufY
+      o8P979btB01KmK1yDM3HAIUiOmpBnOn5chCgnoEzaH5UkuVzja0GNlg5hGskBc0W
+      xLV4YamzPuKcw2zawZzOngM3Q5l2bzliafn5VsOlh7ikIvzcNeW0NsZm+e305vMl
+      7E1o0QIZF0Z1WTZOWHw8StlYIbLUSrQYMeALTYhAgy0zHQXIXgiQkWFcoUdxABT5
+      SyPDEPE3mzuht8D8vUJ0SF4c1gfUjQ6B3frc9vfUKy7P4Y96Jlh9EqJF+EFGriTq
+      CEt0ja8OtzhtG2OY0TLCI/BXMoDYme5NAccz4SzgNwIDAQABMA0GCSqGSIb3DQEB
+      CwUAA4IBAQBoB3tev9KJWQPnNqlwaRMPAbOoxkROk8w3DM65AkjboGGXgnD74vXW
+      m/wxBI62bmryIR/6GyuJMeMCL6d4QdeBa8/ICj+BzjYsAxrsOGc8YaK1gfNHcxnW
+      i3YVJZ8d8jyiuobpt+rAuf4ezbWUalJmkrvRPbjcDfmtkaaNVs2hqZZ8U+garU0/
+      iPMXcrIk5a8IobAJGN3Y2AovFAMrCpJSC+pK+0FhE44wJNXDiTeq6u5k3xF39Ysc
+      1968mUzynrRCbglChfOCDPnX+l1VqkyXkWxWIun2HYvcS7bDpiyWekoMHnwYWiFc
+      ze90OW2ZcjtOJb9z0aXZmHlGWFCAcY8V
+      -----END CERTIFICATE-----
+    insecureEdgeTerminationPolicy: None
+
