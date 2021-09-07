@@ -44,6 +44,9 @@ fi
 
 read -p "Please enter the password you want for admin: " PASSWORD
 
+read -p "Enter name of deployment (default webgui-deployment): " DEPLOYMENT_NAME
+DEPLOYMENT_NAME=${DEPLOYMENT_NAME:-webgui-deployment}
+
 mkdir -p generated-certs
 cd generated-certs
 
@@ -53,9 +56,11 @@ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem -su
 
 cd ..
 
-oc create service clusterip webgui-deployment --tcp=9090:9090
+sed 's@webgui-deployment@'"$DEPLOYMENT_NAME"'@g' ./manifests/datapower.yaml > manifests/datapower-manifest.yaml
 
-oc create route reencrypt webgui-deployment --service=webgui-deployment --dest-ca-cert generated-certs/myCA.pem
+oc create service clusterip $DEPLOYMENT_NAME --tcp=9090:9090
+
+oc create route reencrypt $DEPLOYMENT_NAME --service=$DEPLOYMENT_NAME --dest-ca-cert generated-certs/myCA.pem
 
 oc create secret generic datapower-user --from-literal=password=$PASSWORD
 
@@ -63,10 +68,10 @@ oc create secret generic datapower-cert --from-file=generated-certs/myCA.pem --f
 
 oc apply -f manifests/domain-config.yaml
 
-oc apply -f manifests/datapower.yaml
+oc apply -f manifests/datapower-manifest.yaml
 
 COUNT=30;
-while [ $(oc get DataPowerService webgui-deployment  -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]
+while [ $(oc get DataPowerService $DEPLOYMENT_NAME  -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]
 do  
     if  [ $COUNT -le 1 ]
     then 
@@ -78,6 +83,6 @@ do
     fi
 done
 
-ROUTE_URL=$(oc get route webgui-deployment -o jsonpath='{.spec.host}')
+ROUTE_URL=$(oc get route $DEPLOYMENT_NAME -o jsonpath='{.spec.host}')
 
 echo "Route URL is: https://$ROUTE_URL"
