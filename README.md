@@ -16,6 +16,6 @@ A tool to setup a basic DataPower deployment with the administrative WebGUI alre
 
 > You may need to give it permissions to execute first with `chmod +x install.sh`
 
-2. Follow the onscreen instructions which will check the OpenShift Project you wish to install into and what you wish your admin password for the dashboard to be.
+2. Follow the onscreen instructions which will check the OpenShift Project you wish to install into, what to name the deployment and what you wish your admin password for the dashboard to be.
 
 3. The script will wait for the pods to be in a ready state and then provide the URL to the WebGUI.
