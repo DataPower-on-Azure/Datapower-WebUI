@@ -29,19 +29,20 @@ while true; do
 done
 
 
-    if [ -d "./generated-certs" ]
-    then
-        echo "\nError: 'generated-certs' directory already exists"
-        while true; do
-            read -p "Would you like to overwrite? (Y/N) " yn
-            case $yn in
-                [Yy]* ) break;;
-                [Nn]* ) echo "Exiting";exit 1;;
-                * ) echo "Please answer yes or no.";;
-            esac
-        done
-    fi
+if [ -d "./generated-certs" ]
+then
+    echo "\nError: 'generated-certs' directory already exists"
+    while true; do
+        read -p "Would you like to overwrite? (Y/N) " yn
+        case $yn in
+            [Yy]* ) break;;
+            [Nn]* ) echo "Exiting";exit 1;;
+            * ) echo "Please answer yes or no.";;
+        esac
+     done
+fi
 
+read -p "Please enter the password you want for admin: " PASSWORD
 
 mkdir -p generated-certs
 cd generated-certs
@@ -56,8 +57,6 @@ oc create service clusterip webgui-deployment --tcp=9090:9090
 
 oc create route reencrypt webgui-deployment --service=webgui-deployment --dest-ca-cert generated-certs/myCA.pem
 
-read -p "Please enter the password you want for admin: " PASSWORD
-
 oc create secret generic datapower-user --from-literal=password=$PASSWORD
 
 oc create secret generic datapower-cert --from-file=generated-certs/myCA.pem --from-file=generated-certs/myCA.key
@@ -65,3 +64,21 @@ oc create secret generic datapower-cert --from-file=generated-certs/myCA.pem --f
 oc apply -f manifests/domain-config.yaml
 
 oc apply -f manifests/datapower.yaml
+
+COUNT=30;
+
+while [ $(oc get DataPowerService webgui-deployment  -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]
+do  
+    if  [ $COUNT -le 1 ]
+    then 
+        echo "timeout waiting for pods"
+        exit 1
+    else
+        COUNT=$(( $COUNT - 1 ))
+        echo "waiting for pod, trying $COUNT more times" && sleep 10; 
+    fi
+done
+
+ROUTE_URL=$(oc get route webgui-deployment -o jsonpath='{.spec.host}')
+
+echo "Route URL is: https://$ROUTE_URL"
