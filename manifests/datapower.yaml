@@ -2,8 +2,9 @@ apiVersion: datapower.ibm.com/v1beta3
 kind: DataPowerService
 metadata:
   name: webgui-deployment
-  namespace: datapower
 spec:
+  labels:
+    app: webgui-deployment
   license:
     accept: true
     license: L-RJON-C2XKPU
@@ -22,10 +23,9 @@ spec:
     - name: default
       certs:
         - certType: sharedcerts # Load into SharedCerts
-          secret: datapower-cert-piers # OCP Secret to load certs from
+          secret: datapower-cert # OCP Secret to load certs from
       dpApp:
         config:
-          - domain-config-fixed-cert # ConfigMap where datapower configuration is stored
-      passphraseSecret: default-passphrase # Secret which contains passphrase for Key (if needed)
+          - domain-config # ConfigMap where datapower configuration is stored
   version: 10.0-cd
   replicas: 1

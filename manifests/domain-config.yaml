@@ -2,27 +2,6 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: domain-config
-  namespace: datapower
-  selfLink: /api/v1/namespaces/datapower/configmaps/domain-config
-  uid: 8d61c08f-36c3-44a7-9ad3-67218aa4db48
-  resourceVersion: '15133122'
-  creationTimestamp: '2021-08-30T18:23:31Z'
-  managedFields:
-    - manager: oc
-      operation: Update
-      apiVersion: v1
-      time: '2021-08-30T18:23:31Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:data': {}
-    - manager: Mozilla
-      operation: Update
-      apiVersion: v1
-      time: '2021-08-31T09:50:38Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:data':
-          'f:default.cfg': {}
 data:
   default.cfg: >
     top; configure terminal; suppress-warnings; exec config:///auto-user.cfg; no suppress-warnings
