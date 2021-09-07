@@ -56,7 +56,7 @@ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem -su
 
 cd ..
 
-oc patch -f manifests/datapower.yaml -p "{\"metadata\":{\"name\":\"$DEPLOYMENT_NAME\"}}" --local=true --type merge -o yaml > manifests/datapower-manifest.yaml
+oc patch -f manifests/datapower.yaml --type "json" -p "[{'op': 'replace', 'path': '/metadata/name','value':'$DEPLOYMENT_NAME'}, {'op': 'replace', 'path': '/spec/labels/app','value':'$DEPLOYMENT_NAME'}]" --dry-run=client -o yaml > manifests/datapower-manifest.yaml
 
 oc create service clusterip $DEPLOYMENT_NAME --tcp=9090:9090
 
