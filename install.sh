@@ -56,7 +56,7 @@ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem -su
 
 cd ..
 
-sed 's@webgui-deployment@'"$DEPLOYMENT_NAME"'@g' ./manifests/datapower.yaml > manifests/datapower-manifest.yaml
+oc patch -f manifests/datapower.yaml -p "{\"metadata\":{\"name\":\"$DEPLOYMENT_NAME\"}}" --local=true --type merge -o yaml > manifests/datapower-manifest.yaml
 
 oc create service clusterip $DEPLOYMENT_NAME --tcp=9090:9090
 
