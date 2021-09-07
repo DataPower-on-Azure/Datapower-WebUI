@@ -66,7 +66,6 @@ oc apply -f manifests/domain-config.yaml
 oc apply -f manifests/datapower.yaml
 
 COUNT=30;
-
 while [ $(oc get DataPowerService webgui-deployment  -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]
 do  
     if  [ $COUNT -le 1 ]
