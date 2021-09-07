@@ -4,9 +4,11 @@ A tool to setup a basic DataPower deployment with the administrative WebGUI alre
 
 ## Prerequisites
 
-Install the DataPower operator from OperatorHub in a namespace of your choice.
+1. Install the DataPower operator from OperatorHub in a namespace of your choice.
 
-Login to the OpenShift cluster you wish to install the instance into.
+2. Install the OpenShift `oc` cli
+
+3. Login to the OpenShift cluster you wish to install the instance into on the cli.
 
 ## How to Use
 
