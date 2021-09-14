@@ -72,7 +72,7 @@ oc apply -f manifests/domain-config.yaml
 oc apply -f manifests/datapower-manifest.yaml
 
 COUNT=30;
-while [ $(oc get DataPowerService $DEPLOYMENT_NAME  -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]
+while [[ $(oc get DataPowerService $DEPLOYMENT_NAME  -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]
 do  
     if  [ $COUNT -le 1 ]
     then 
