@@ -47,6 +47,15 @@ read -p "Please enter the password you want for admin: " PASSWORD
 read -p "Enter name of deployment (default webgui-deployment): " DEPLOYMENT_NAME
 DEPLOYMENT_NAME=${DEPLOYMENT_NAME:-webgui-deployment}
 
+read -p "Enter name of domain config (default domain-config): " DOMAIN_CONFIG_NAME
+DOMAIN_CONFIG_NAME=${DOMAIN_CONFIG_NAME:-domain-config}
+
+read -p "Enter name of domain user secret (default datapower-user): " DATAPOWER_USER_SECRET
+DATAPOWER_USER_SECRET=${DATAPOWER_USER_SECRET:-datapower-user}
+
+read -p "Enter name of datapower certificate secret (default datapower-cert): " DATAPOWER_CERT_NAME
+DATAPOWER_CERT_NAME=${DATAPOWER_CERT_NAME:-datapower-cert}
+
 mkdir -p generated-certs
 cd generated-certs
 
@@ -56,18 +65,19 @@ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem -su
 
 cd ..
 
-oc patch -f manifests/datapower.yaml --type "json" -p "[{'op': 'replace', 'path': '/metadata/name','value':'$DEPLOYMENT_NAME'}, 
-{'op': 'replace', 'path': '/spec/labels/app','value':'$DEPLOYMENT_NAME'}]" --dry-run=client -o yaml > manifests/datapower-manifest.yaml
+oc patch -f manifests/datapower.yaml --type "json" -p "[{'op': 'replace', 'path': '/metadata/name','value':'$DEPLOYMENT_NAME'}, {'op': 'replace', 'path': '/spec/labels/app','value':'$DEPLOYMENT_NAME'},{'op': 'replace', 'path': '/spec/domains/0/dpApp/config/0','value':'$DOMAIN_CONFIG_NAME'},{'op': 'replace', 'path': '/spec/domains/0/certs/0/secret','value':'$DATAPOWER_CERT_NAME'},{'op': 'replace', 'path': '/spec/users/0/passwordSecret','value':'$DATAPOWER_USER_SECRET'}]" --dry-run=client -o yaml > manifests/datapower-manifest.yaml
+
+oc patch -f manifests/domain-config.yaml --type "json" -p "[{'op': 'replace', 'path': '/metadata/name','value':'$DOMAIN_CONFIG_NAME'}]" --dry-run=client -o yaml > manifests/domain-config-manifest.yaml
 
 oc create service clusterip $DEPLOYMENT_NAME --tcp=9090:9090
 
 oc create route reencrypt $DEPLOYMENT_NAME --service=$DEPLOYMENT_NAME --dest-ca-cert generated-certs/myCA.pem
 
-oc create secret generic datapower-user --from-literal=password=$PASSWORD
+oc create secret generic $DATAPOWER_USER_SECRET --from-literal=password=$PASSWORD
 
-oc create secret generic datapower-cert --from-file=generated-certs/myCA.pem --from-file=generated-certs/myCA.key
+oc create secret generic $DATAPOWER_CERT_NAME --from-file=generated-certs/myCA.pem --from-file=generated-certs/myCA.key
 
-oc apply -f manifests/domain-config.yaml
+oc apply -f manifests/domain-config-manifest.yaml
 
 oc apply -f manifests/datapower-manifest.yaml
 
