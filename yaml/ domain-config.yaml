@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: domain-config
-  namespace: datapower
+  namespace: tools
   uid: 9f270f69-e318-48ee-a8ba-61a3b0467178
   resourceVersion: '886950'
   creationTimestamp: '2022-04-06T15:23:41Z'

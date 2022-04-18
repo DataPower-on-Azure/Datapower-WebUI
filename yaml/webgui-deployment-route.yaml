@@ -2,7 +2,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: webgui-deployment
-  namespace: datapower
+  namespace: tools
   uid: 8ab95ce1-a5c8-4426-b261-877a80024b95
   resourceVersion: '886939'
   creationTimestamp: '2022-04-06T15:23:40Z'

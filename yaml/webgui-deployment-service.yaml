@@ -79,7 +79,7 @@ metadata:
       manager: datapower-operator
       operation: Update
       time: '2022-04-15T03:45:19Z'
-  namespace: datapower
+  namespace: tools
   labels:
     app.kubernetes.io/instance: datapower-webgui-deployment
     app.kubernetes.io/managed-by: datapower-operator
