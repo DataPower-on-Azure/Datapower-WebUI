@@ -7,7 +7,7 @@ spec:
     app: webgui-deployment
   license:
     accept: true
-    license: L-RJON-C2XKPU
+    license: L-RJON-CCCP46
     use: nonproduction
   resources:
     limits:

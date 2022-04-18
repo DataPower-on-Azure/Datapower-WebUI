@@ -1,0 +1,85 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: webgui-deployment
+  namespace: datapower
+  uid: 8ab95ce1-a5c8-4426-b261-877a80024b95
+  resourceVersion: '886939'
+  creationTimestamp: '2022-04-06T15:23:40Z'
+  labels:
+    app: webgui-deployment
+  annotations:
+    openshift.io/host.generated: 'true'
+  managedFields:
+    - manager: oc
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      time: '2022-04-06T15:23:40Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:port':
+            .: {}
+            'f:targetPort': {}
+          'f:tls':
+            .: {}
+            'f:destinationCACertificate': {}
+            'f:termination': {}
+          'f:to':
+            'f:kind': {}
+            'f:name': {}
+            'f:weight': {}
+          'f:wildcardPolicy': {}
+    - manager: openshift-router
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      time: '2022-04-06T15:23:40Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:ingress': {}
+spec:
+  host: >-
+    webgui-deployment-datapower.itzroks-661001lcd5-03tei5-4b4a324f027aea19c5cbc0c3275c4656-0000.us-south.containers.appdomain.cloud
+  to:
+    kind: Service
+    name: webgui-deployment
+    weight: 100
+  port:
+    targetPort: 9090-9090
+  tls:
+    termination: reencrypt
+    destinationCACertificate: |
+      -----BEGIN CERTIFICATE-----
+      MIICljCCAX4CCQCpi382/QjKMDANBgkqhkiG9w0BAQsFADANMQswCQYDVQQDDAJH
+      QjAeFw0yMjA0MDYxNTIzMzlaFw0yNzA0MDUxNTIzMzlaMA0xCzAJBgNVBAMMAkdC
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoFuLydVINZIdQ+g4D9xp
+      ZCPjjgtjIRPTaIJsPRX/gio49SntG1Qg2C8hv3RAJopqhkDx90IzPETZHFGvR68G
+      GFhDyKyordNHI8cADOMmMrks2GptUd30YMmt2rYx4/bByT0tFhhv5p/nX6IYwAjN
+      JXu+qjHTLgIQd1kXogrwMQhtiHT79wNfvEQf8KlPCzxq9lKjgUPat6QAz1wguZkt
+      giyUFRJJusw3CtItyrV41KZvlZLRIrDu/kfiBA277/+Kur+VCFP6iNuEggJuOPFt
+      S2cCuA1hYx1F/vAa6G4LL7DBuSjSc5Ha+F1q52V3b8+pmxVu9ddwk0vUSFl7aj6C
+      GQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBsg2GDQw5SxbWal+O2DE8cIxIXqr5N
+      QJ63vkmqxVLgJMdUH2VUg6Pmt/pLeQ3ThoFF0GYEenvFCauCUnxlAPbFC775gMKD
+      k1jFE80GVhyq7DWDWWrD9qJFdlZctD/5WhphNL6thp7u6FqGZmbNCbtqW+rc69+f
+      0CBibP3wLcsfnhF/tB5FDNAOCaGBgBHXV30XZ+4ls0RdNUCohKv8ibi4qkKs6WM3
+      ijZJ16ZHqqFqOzgDvryJZuG3albH1l6RM4gc4tTdtTFwuuVlDm+xXCAnb+LDGAQn
+      fQ7Rbkbbk0+sm0pTlDu7fflGporGEuDSZLtf+o8rD5gQf8TgWE8xqBMe
+      -----END CERTIFICATE-----
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: >-
+        webgui-deployment-datapower.itzroks-661001lcd5-03tei5-4b4a324f027aea19c5cbc0c3275c4656-0000.us-south.containers.appdomain.cloud
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+          lastTransitionTime: '2022-04-06T15:23:40Z'
+      wildcardPolicy: None
+      routerCanonicalHostname: >-
+        router-default.itzroks-661001lcd5-03tei5-4b4a324f027aea19c5cbc0c3275c4656-0000.us-south.containers.appdomain.cloud
