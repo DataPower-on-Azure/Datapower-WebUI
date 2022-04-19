@@ -2,15 +2,10 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: webgui-deployment
-  #namespace: tools
-  #uid: 8ab95ce1-a5c8-4426-b261-877a80024b95
-  #creationTimestamp: '2022-04-06T15:23:40Z'
   labels:
     app: webgui-deployment
 
 spec:
- # host: >-
-  #  webgui-deployment-datapower.itzroks-661001lcd5-03tei5-4b4a324f027aea19c5cbc0c3275c4656-0000.us-south.containers.appdomain.cloud
   to:
     kind: Service
     name: webgui-deployment
@@ -37,5 +32,4 @@ spec:
       fQ7Rbkbbk0+sm0pTlDu7fflGporGEuDSZLtf+o8rD5gQf8TgWE8xqBMe
       -----END CERTIFICATE-----
   wildcardPolicy: None
-#status:
    

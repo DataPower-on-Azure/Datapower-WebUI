@@ -2,8 +2,6 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: domain-config
-  #namespace: tools
-  #uid: 9f270f69-e318-48ee-a8ba-61a3b0467178
 data:
   default.cfg: >
     top; configure terminal; suppress-warnings; exec config:///auto-user.cfg; no
