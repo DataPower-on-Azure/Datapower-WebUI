@@ -2,49 +2,15 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: webgui-deployment
-  namespace: tools
-  uid: 8ab95ce1-a5c8-4426-b261-877a80024b95
-  resourceVersion: '886939'
-  creationTimestamp: '2022-04-06T15:23:40Z'
+  #namespace: tools
+  #uid: 8ab95ce1-a5c8-4426-b261-877a80024b95
+  #creationTimestamp: '2022-04-06T15:23:40Z'
   labels:
     app: webgui-deployment
-  annotations:
-    openshift.io/host.generated: 'true'
-  managedFields:
-    - manager: oc
-      operation: Update
-      apiVersion: route.openshift.io/v1
-      time: '2022-04-06T15:23:40Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:metadata':
-          'f:labels':
-            .: {}
-            'f:app': {}
-        'f:spec':
-          'f:port':
-            .: {}
-            'f:targetPort': {}
-          'f:tls':
-            .: {}
-            'f:destinationCACertificate': {}
-            'f:termination': {}
-          'f:to':
-            'f:kind': {}
-            'f:name': {}
-            'f:weight': {}
-          'f:wildcardPolicy': {}
-    - manager: openshift-router
-      operation: Update
-      apiVersion: route.openshift.io/v1
-      time: '2022-04-06T15:23:40Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:status':
-          'f:ingress': {}
+
 spec:
-  host: >-
-    webgui-deployment-datapower.itzroks-661001lcd5-03tei5-4b4a324f027aea19c5cbc0c3275c4656-0000.us-south.containers.appdomain.cloud
+ # host: >-
+  #  webgui-deployment-datapower.itzroks-661001lcd5-03tei5-4b4a324f027aea19c5cbc0c3275c4656-0000.us-south.containers.appdomain.cloud
   to:
     kind: Service
     name: webgui-deployment
@@ -71,15 +37,5 @@ spec:
       fQ7Rbkbbk0+sm0pTlDu7fflGporGEuDSZLtf+o8rD5gQf8TgWE8xqBMe
       -----END CERTIFICATE-----
   wildcardPolicy: None
-status:
-  ingress:
-    - host: >-
-        webgui-deployment-datapower.itzroks-661001lcd5-03tei5-4b4a324f027aea19c5cbc0c3275c4656-0000.us-south.containers.appdomain.cloud
-      routerName: default
-      conditions:
-        - type: Admitted
-          status: 'True'
-          lastTransitionTime: '2022-04-06T15:23:40Z'
-      wildcardPolicy: None
-      routerCanonicalHostname: >-
-        router-default.itzroks-661001lcd5-03tei5-4b4a324f027aea19c5cbc0c3275c4656-0000.us-south.containers.appdomain.cloud
+#status:
+   
